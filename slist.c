@@ -4,6 +4,9 @@
 #include "slist.H"
 
 
+/****************************************************/
+/****************************************************/
+
 void slist_init(slist_t* list) {
   printf("slist_init() \n");
   
@@ -15,8 +18,10 @@ void slist_init(slist_t* list) {
   
 }
 
+/****************************************************/
+/****************************************************/
 
-void slist_destroy(slist_t* list,slist_destroy_t freeData) {
+void slist_destroy(slist_t* list,slist_destroy_t dealloc) {
     printf("slist_destroy() \n");
     
     slist_node_t* p, *q;
@@ -26,7 +31,7 @@ void slist_destroy(slist_t* list,slist_destroy_t freeData) {
         
         q = slist_next(p);
         
-        if(freeData)
+        if(dealloc)
             free(slist_data(p));
             
         
@@ -35,6 +40,8 @@ void slist_destroy(slist_t* list,slist_destroy_t freeData) {
     
 }
 
+/****************************************************/
+/****************************************************/
 
 void* slist_pop_first(slist_t* list) {
     printf("slist_pop_first() \n");
@@ -64,15 +71,17 @@ void* slist_pop_first(slist_t* list) {
     return data;
 }
 
+/****************************************************/
+/****************************************************/
 
-int slist_append(slist_t* list, void* newData) {
+int slist_append(slist_t* list, void* data) {
     printf("slist_append() \n");
     
     slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
     if(node == NULL)
         return -1;
     
-    slist_data(node) = newData;
+    slist_data(node) = data;
     slist_next(node) = NULL;
     
     slist_size(list)++;
@@ -88,7 +97,60 @@ int slist_append(slist_t* list, void* newData) {
     
     printf("adding after tail \n");
     slist_next(slist_tail(list)) = node;
+    slist_tail(list) = node;
     
     return 0;
 }
 
+/****************************************************/
+/****************************************************/
+
+int slist_prepend(slist_t* list, void* data) {
+  printf("slist_prepend() \n");
+  
+  slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
+  if(node == NULL) 
+    return -1;
+    
+  slist_data(node) = data;
+  slist_next(node) = NULL;
+  
+  slist_size(list)++;
+    
+    
+  if(slist_head(list) == NULL) {
+    
+    printf("head == NULL \n");
+    
+    slist_head(list) = node;
+    slist_tail(list) = node;
+    
+    return 0;
+    
+  }
+    
+  printf("adding before head \n");
+  slist_next(node) = slist_head(list);
+  slist_head(list) = node;
+    
+  return 0;
+}
+
+/****************************************************/
+/****************************************************/
+
+
+int slist_append_list(slist_t* to, slist_t* from) {
+  
+  slist_node_t* p;
+  
+  for(p = slist_head(from); p != NULL; p = slist_next(p)) {
+    
+    slist_append(to, slist_data(p));
+  }
+  
+  return 0;
+}
+
+/****************************************************/
+/****************************************************/
