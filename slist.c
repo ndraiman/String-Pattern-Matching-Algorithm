@@ -36,6 +36,35 @@ void slist_destroy(slist_t* list,slist_destroy_t freeData) {
 }
 
 
+void* slist_pop_first(slist_t* list) {
+    printf("slist_pop_first() \n");
+    
+    if(slist_size(list) == 0) {
+        return NULL;
+    
+    }
+     
+     
+    void* data = slist_data(slist_head(list));
+    
+    if(slist_size(list) == 1) {
+        
+        free(slist_head(list));
+        slist_head(list) = NULL;
+        
+    } else {
+        
+        slist_node_t* p = slist_head(list);
+        slist_head(list) = slist_next(p);
+        free(p);
+        
+    }
+    
+    slist_size(list)--;
+    return data;
+}
+
+
 int slist_append(slist_t* list, void* newData) {
     printf("slist_append() \n");
     

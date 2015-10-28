@@ -15,6 +15,8 @@ int main() {
     int x = 5;
     slist_append(list, &x);
     print_list(list);
+    slist_pop_first(list);
+    print_list(list);
     slist_destroy(list, SLIST_LEAVE_DATA);
     
     return 0;
@@ -25,7 +27,7 @@ int main() {
 
 
 void print_list(slist_t* list) {
-    printf("print_list \n");
+    printf("print_list() \n");
     
     slist_node_t* p, q;
     int i = 0;
