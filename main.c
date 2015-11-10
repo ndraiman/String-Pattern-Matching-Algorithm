@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "slist.H"
+#include "slist.h"
 
 void print_list(slist_t*);
 
