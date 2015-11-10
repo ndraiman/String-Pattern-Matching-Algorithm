@@ -75,6 +75,8 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 			if(newState == NULL) {
 				return -1;
 			}
+
+			printf("Allocating state %d\n", pm->newstate);
 			if(init_state(pm, newState, (currentState->depth) + 1) == -1) {
 				return -1;
 			}
@@ -87,6 +89,8 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 		}
 	}
 
+	slist_append(currentState->output, c);
+
 	return 0;
 }
 
@@ -94,6 +98,8 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 /****************************************************/
 
 int pm_makeFSM(pm_t *pm) {
+
+
 
 }
 
@@ -103,6 +109,8 @@ int pm_makeFSM(pm_t *pm) {
 int pm_goto_set(pm_state_t *from_state,
 	unsigned char symbol,
 	pm_state_t *to_state) {
+
+		printf("%d -> %c -> %d\n", from_state->id, symbol, to_state->id);
 
 		pm_labeled_edge_t* edge = (pm_labeled_edge_t*)malloc(sizeof(pm_labeled_edge_t));
 		if(edge == NULL) {
