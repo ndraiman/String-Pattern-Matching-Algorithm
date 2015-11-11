@@ -99,6 +99,26 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 
 int pm_makeFSM(pm_t *pm) {
 
+	slist_t* queue = (slist_t*)malloc(sizeof(slist_t));
+	if(queue == NULL) {
+		return -1;
+	}
+
+	slist_node_t* p;
+	for(p = pm->zerostate->slist_head(_transitions); p != NULL; p = slist_next(p)) {
+		pm_state_t* state = ((pm_labeled_edge_t*)slist_data(p))->state;
+		slist_append(queue, state);
+		state->fail = pm->zerostate;
+	}
+
+	while(slist_size(queue) != 0) {
+
+		pm_state_t* r = slist_pop_first(queue);
+
+		
+
+
+	}
 
 
 }
