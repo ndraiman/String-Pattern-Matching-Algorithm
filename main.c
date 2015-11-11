@@ -106,6 +106,10 @@ int main() {
     returned = pm_makeFSM(fsm);
     printf("pm_makeFSM returned %d\n", returned);
 
+    slist_node_t* p = fsm->zerostate->slist_head(_transitions);
+    pm_state_t* stateA = ((pm_labeled_edge_t*)slist_data(p))->state;
+    printf("stateA id = %d, output = %s\n", stateA->id, (char*)stateA->slist_data(slist_head(output)));
+
     printf("\n********************\n***** Main END *****\n********************\n");
 
     return 0;
