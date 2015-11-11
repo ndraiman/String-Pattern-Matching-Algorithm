@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "slist.h"
+#include "pattern_matching.h"
 
 void print_list(slist_t*);
 
@@ -11,47 +12,99 @@ int main() {
 
   printf("\n********************\n**** Main START ****\n********************\n");
 
-    slist_t* list = (slist_t*)malloc(sizeof(slist_t));
-    slist_t* list2 = (slist_t*)malloc(sizeof(slist_t));
+    // slist_t* list = (slist_t*)malloc(sizeof(slist_t));
+    // slist_t* list2 = (slist_t*)malloc(sizeof(slist_t));
+    //
+    // slist_init(list);
+    // slist_init(list2);
+    //
+    // int x = 5;
+    // int y = 8;
+    //
+    // printf("\n*** adding to list ***\n");
+    // slist_append(list, &x);
+    // slist_prepend(list, &y);
+    // printf("\n*** adding to list2 ***\n");
+    // slist_append(list2, &x);
+    // slist_prepend(list2, &y);
+    //
+    // printf("\n*** Printing list ***\n");
+    // print_list(list);
+    // printf("\n*** Printing list2 ***\n");
+    // print_list(list2);
+    //
+    // printf("\n*** Pop list ***\n");
+    // slist_pop_first(list);
+    //
+    // printf("\n*** Printing list ***\n");
+    // print_list(list);
+    //
+    // printf("\n*** Appending lists ***\n");
+    // slist_append_list(list, list2);
+    //
+    // printf("\n*** Printing list ***\n");
+    // print_list(list);
+    // printf("\n*** Printing list2 ***\n");
+    // print_list(list2);
+    //
+    // printf("\n*** Destroying lists ***\n");
+    // slist_destroy(list, SLIST_LEAVE_DATA);
+    // slist_destroy(list2, SLIST_LEAVE_DATA);
+    //
+    // free(list);
+    // free(list2);
 
-    slist_init(list);
-    slist_init(list2);
+    printf("\n********************\n***** Testing pattern_matching *****\n********************\n");
 
-    int x = 5;
-    int y = 8;
+    pm_t* fsm = (pm_t*)malloc(sizeof(pm_t));
 
-    printf("\n*** adding to list ***\n");
-    slist_append(list, &x);
-    slist_prepend(list, &y);
-    printf("\n*** adding to list2 ***\n");
-    slist_append(list2, &x);
-    slist_prepend(list2, &y);
+    int returned;
+    returned = pm_init(fsm);
+    printf("pm_init returned %d\n", returned);
 
-    printf("\n*** Printing list ***\n");
-    print_list(list);
-    printf("\n*** Printing list2 ***\n");
-    print_list(list2);
+    char* string;
 
-    printf("\n*** Pop list ***\n");
-    slist_pop_first(list);
+    printf("*******************************\n");
+    string = "a";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 1);
+    printf("pm_addstring returned %d\n", returned);
 
-    printf("\n*** Printing list ***\n");
-    print_list(list);
+    printf("*******************************\n");
 
-    printf("\n*** Appending lists ***\n");
-    slist_append_list(list, list2);
+    string = "abc";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 3);
+    printf("pm_addstring returned %d\n", returned);
 
-    printf("\n*** Printing list ***\n");
-    print_list(list);
-    printf("\n*** Printing list2 ***\n");
-    print_list(list2);
+    printf("*******************************\n");
 
-    printf("\n*** Destroying lists ***\n");
-    slist_destroy(list, SLIST_LEAVE_DATA);
-    slist_destroy(list2, SLIST_LEAVE_DATA);
+    string = "bca";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 3);
+    printf("pm_addstring returned %d\n", returned);
 
-    free(list);
-    free(list2);
+    printf("*******************************\n");
+
+    string = "cab";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 3);
+    printf("pm_addstring returned %d\n", returned);
+
+    printf("*******************************\n");
+
+    string = "acb";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 3);
+    printf("pm_addstring returned %d\n", returned);
+
+    printf("*******************************\n");
+    printf("*******************************\n");
+    printf("*******************************\n");
+
+    printf("computing failure functions\n");
+    returned = pm_makeFSM(fsm);
+    printf("pm_makeFSM returned %d\n", returned);
 
     printf("\n********************\n***** Main END *****\n********************\n");
 
