@@ -256,6 +256,8 @@ slist_t* pm_fsm_search(pm_t *pm,
 					printf("Pattern: %s, start at: %d, ends at: %d, last state = %d\n",
 						matched_string, (int)(j - (strlen(matched_string) - 1)), j, state->id);
 
+						//TODO suppose to create pm_match_t here
+
 				}
 				slist_append_list(matched_list, state->output);
 
@@ -273,6 +275,7 @@ slist_t* pm_fsm_search(pm_t *pm,
 
 void pm_destroy(pm_t* pm) {
 	printf("pm_destroy\n");//DEBUG
+
 
 }
 
