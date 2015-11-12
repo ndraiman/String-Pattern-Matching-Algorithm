@@ -90,7 +90,7 @@ pm_state_t* pm_goto_get(pm_state_t *state,
 
 /* Search for matches in a string of size n in the FSM.
    if there are no matches return empty list */
-slist_t* pm_fsm_search(pm_state_t *,unsigned char *,size_t);
+slist_t* pm_fsm_search(pm_t *,unsigned char *,size_t);
 
 
 

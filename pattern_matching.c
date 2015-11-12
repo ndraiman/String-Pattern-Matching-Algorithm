@@ -16,7 +16,11 @@ int pm_init(pm_t *pm) {
 		exit(-1);
 	}
 
-	return init_state(pm, pm->zerostate, 0);
+	// return init_state(pm, pm->zerostate, 0);
+	int result = init_state(pm, pm->zerostate, 0);
+	pm->zerostate->fail = pm->zerostate;
+
+	return result;
 }
 
 int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
@@ -166,6 +170,10 @@ int pm_goto_set(pm_state_t *from_state,
 pm_state_t* pm_goto_get(pm_state_t *state,
   unsigned char symbol) {
 		printf("pm_goto_get\n");//DEBUG
+		if(state == NULL) {
+			printf("state is NULL, returning NULL\n");//DEBUG
+			return NULL;
+		}
 		printf("state id = %d, symbol = %c\n", state->id, symbol);//DEBUG
 		slist_node_t* p;
 
@@ -179,6 +187,7 @@ pm_state_t* pm_goto_get(pm_state_t *state,
 			}
 		}
 
+		printf("returning NULL\n");//DEBUG
 		return NULL;
 	}
 
@@ -187,7 +196,7 @@ pm_state_t* pm_goto_get(pm_state_t *state,
 /****************************************************/
 
 
-slist_t* pm_fsm_search(pm_state_t *pm,
+slist_t* pm_fsm_search(pm_t *pm,
 	unsigned char *c,
 	size_t n) {
 		printf("pm_fsm_search\n");//DEBUG
@@ -203,26 +212,60 @@ slist_t* pm_fsm_search(pm_state_t *pm,
 		pm_state_t* state;
 		pm_state_t* matched_state;
 
+		// printf("before loop\n");//DEBUG
+		// int x;//DEBUG
+		// scanf("%d", &x);//DEBUG
+		state = pm->zerostate;
+
 		for(j = 0; j < n; j++) {
+
+			// printf("in loop\n");//DEBUG
+			// int x;//DEBUG
+			// scanf("%d", &x);//DEBUG
 
 			// state = pm->zerostate; //Should i get pm_state_t or pm_t?
 
 			while((matched_state = pm_goto_get(state, c[j])) == NULL) {
-
+				// slist_node_t* p = state->slist_head(_transitions);//DEBUG
+				// char c = ((pm_labeled_edge_t*)slist_data(p))->label;//DEBUG
+				printf("state id = %d, c[%d] = %c\n*******\n", state->id, j, c[j]);//DEBUG
 				state = state->fail;
 
+				if(state->id == 0) {
+					j++;
+					printf("Its zerostate, increasting J to %d\n", j);//DEBUG
+					if(j == n) {
+						printf("I reached the end of the string, returning...\n");//DEBUG
+						return matched_list;
+					}
+
+				}
 			}
 
-			state = matched_state;
+			state = matched_state; //pm_goto_get(state, c[j]);
+			// if(state == NULL) {
+			// 	continue;
+			// }
 
 			if(state->slist_size(output) > 0) {
+				printf("!!!!! adding output to matched list \n");//DEBUG
+				slist_node_t* p;
+				for(p = state->slist_head(output); p != NULL; p = slist_next(p)) {
 
+					char* matched_string = (char*)slist_data(p);
+					printf("Pattern: %s, start at: %d, ends at: %d, last state = %d\n",
+						matched_string, (int)(j - (strlen(matched_string) - 1)), j, state->id);
 
+				}
+				slist_append_list(matched_list, state->output);
 
-
+			} else {
+				printf("!!! NOT adding output!!!!\n");//DEBUG
 			}
 
 		}
+
+		return matched_list;
 }
 
 /****************************************************/
