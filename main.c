@@ -62,7 +62,7 @@ int main() {
     returned = pm_init(fsm);
     printf("pm_init returned %d\n", returned);
 
-    char* string;
+    unsigned char* string;
 
     printf("*******************************\n");
     string = "a";
@@ -139,7 +139,7 @@ int main() {
 void print_list(slist_t* list) {
     printf("print_list() \n");
 
-    slist_node_t* p, q;
+    slist_node_t* p;
     int i = 0;
 
     for(p = slist_head(list); p != NULL; p = slist_next(p)) {

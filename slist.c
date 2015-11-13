@@ -9,7 +9,7 @@
 
 void slist_init(slist_t* list) {
 
-  memset(list, 0, sizeof(list));
+  memset(list, 0, sizeof(slist_t));
   slist_head(list) = NULL;
   slist_tail(list) = NULL;
 
@@ -23,7 +23,6 @@ void slist_init(slist_t* list) {
 void slist_destroy(slist_t* list,slist_destroy_t dealloc) {
 
     slist_node_t* p, *q;
-    int i;
 
     for(p = slist_head(list); p != NULL; p = q) {
 
@@ -79,7 +78,7 @@ int slist_append(slist_t* list, void* data) {
       perror("Failed to allocate memory\n");
       exit(-1);
     }
-    memset(node, 0, sizeof(node));
+    memset(node, 0, sizeof(slist_node_t));
 
     slist_data(node) = data;
     slist_next(node) = NULL;
@@ -111,7 +110,7 @@ int slist_prepend(slist_t* list, void* data) {
     exit(-1);
   }
 
-  memset(node, 0, sizeof(node));
+  memset(node, 0, sizeof(slist_node_t));
 
   slist_data(node) = data;
   slist_next(node) = NULL;

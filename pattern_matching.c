@@ -248,7 +248,7 @@ slist_t* pm_fsm_search(pm_t *pm,
 						perror("Failed to allocate memory\n");
 						exit(-1);
 					}
-					memset(match, 0, sizeof(match));
+					memset(match, 0, sizeof(pm_match_t));
 
 					char* pattern = (char*)slist_data(p);
 
@@ -305,7 +305,7 @@ void pm_destroy_state(pm_state_t* state) {
 void print_list2(slist_t* list) {
     printf("print_list() \n");
 
-    slist_node_t* p, q;
+    slist_node_t* p;
     int i = 0;
 
     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
@@ -321,7 +321,7 @@ void print_list2(slist_t* list) {
 void print_list3(slist_t* list) {
     printf("print_list() \n");
 
-    slist_node_t* p, q;
+    slist_node_t* p;
     int i = 0;
 
     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
