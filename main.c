@@ -116,7 +116,9 @@ int main() {
     printf("searching for string \"%s\"\n", string);
     slist_t* matched = pm_fsm_search(fsm, string, strlen(string));
     printf("matched list:\n");
-    print_list2(matched);
+    print_list3(matched);
+
+    slist_destroy(matched, SLIST_FREE_DATA);
 
     printf("\n********************\n***** Main END *****\n********************\n");
 

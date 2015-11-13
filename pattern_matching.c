@@ -1,10 +1,11 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
-#include "slist.h"
 #include "pattern_matching.h"
+// #include "slist.h"
 
-void print_list2(slist_t*);
+void print_list2(slist_t*);//DEBUG
+void print_list3(slist_t*);//DEBUG
 int init_state(pm_t*, pm_state_t*, pm_int_t);
 
 int pm_init(pm_t *pm) {
@@ -252,14 +253,27 @@ slist_t* pm_fsm_search(pm_t *pm,
 				slist_node_t* p;
 				for(p = state->slist_head(output); p != NULL; p = slist_next(p)) {
 
-					char* matched_string = (char*)slist_data(p);
-					printf("Pattern: %s, start at: %d, ends at: %d, last state = %d\n",
-						matched_string, (int)(j - (strlen(matched_string) - 1)), j, state->id);
+					pm_match_t* match = (pm_match_t*)malloc(sizeof(pm_match_t));
+					if(match == NULL) {
+						perror("Failed to allocate memory\n");
+						exit(-1);
+					}
+					memset(match, 0, sizeof(match));
 
-						//TODO suppose to create pm_match_t here
+					char* pattern = (char*)slist_data(p);
+
+					match->pattern = pattern;
+					match->start_pos = (int)(j - (strlen(pattern) - 1));
+					match->end_pos = j;
+					match->fstate = state;
+
+					printf("Pattern: %s, start at: %d, ends at: %d, last state = %d\n",
+						match->pattern, match->start_pos, match->end_pos, match->fstate->id);
+
+					slist_append(matched_list, match);
 
 				}
-				slist_append_list(matched_list, state->output);
+				// slist_append_list(matched_list, state->output);
 
 			} else {
 				printf("!!! NOT adding output!!!!\n");//DEBUG
@@ -280,6 +294,9 @@ void pm_destroy(pm_t* pm) {
 }
 
 
+/****************************************************/
+/****************************************************/
+
 //DEBUG:
 void print_list2(slist_t* list) {
     printf("print_list() \n");
@@ -291,6 +308,22 @@ void print_list2(slist_t* list) {
 
         i++;
         printf("[%s] -> ", (char*)slist_data(p));
+    }
+
+    printf("|| \n");
+
+}
+
+void print_list3(slist_t* list) {
+    printf("print_list() \n");
+
+    slist_node_t* p, q;
+    int i = 0;
+
+    for(p = slist_head(list); p != NULL; p = slist_next(p)) {
+				pm_match_t* match = (pm_match_t*)slist_data(p);
+        i++;
+        printf("[%s] -> ", match->pattern);
     }
 
     printf("|| \n");

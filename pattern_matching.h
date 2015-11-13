@@ -13,7 +13,7 @@
 #define PATTERN_MATCHING_H
 
 typedef unsigned int pm_int_t;
-// typedef unsigned int size_t;
+//typedef unsigned int size_t;
 
 #define PM_CHARACTERS 256
 

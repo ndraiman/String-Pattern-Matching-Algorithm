@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "slist.h"
 
@@ -78,8 +78,11 @@ int slist_append(slist_t* list, void* data) {
     printf("slist_append() \n");//DEBUG
 
     slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
-    if(node == NULL)
-        return -1;
+    if(node == NULL) {
+      perror("Failed to allocate memory\n");
+      exit(-1);
+    }
+    memset(node, 0, sizeof(node));
 
     slist_data(node) = data;
     slist_next(node) = NULL;
@@ -109,8 +112,12 @@ int slist_prepend(slist_t* list, void* data) {
   printf("slist_prepend() \n");//DEBUG
 
   slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
-  if(node == NULL)
-    return -1;
+  if(node == NULL) {
+    perror("Failed to allocate memory\n");
+    exit(-1);
+  }
+
+  memset(node, 0, sizeof(node));
 
   slist_data(node) = data;
   slist_next(node) = NULL;
