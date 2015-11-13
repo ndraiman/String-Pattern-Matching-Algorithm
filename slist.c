@@ -31,13 +31,16 @@ void slist_destroy(slist_t* list,slist_destroy_t dealloc) {
 
         q = slist_next(p);
 
-        if(dealloc)
+        if(dealloc) {
+            printf("freeing Data\n");//DEBUG
             free(slist_data(p));
+        }
 
 
         free(p);
     }
 
+    free(list);
 }
 
 /****************************************************/

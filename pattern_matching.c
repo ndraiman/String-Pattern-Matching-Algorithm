@@ -6,7 +6,9 @@
 
 void print_list2(slist_t*);//DEBUG
 void print_list3(slist_t*);//DEBUG
+
 int init_state(pm_t*, pm_state_t*, pm_int_t);
+void pm_destroy_state(pm_state_t*);
 
 int pm_init(pm_t *pm) {
 	printf("pm_init\n");//DEBUG
@@ -31,7 +33,6 @@ int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
 	state->depth = depth;
 	state->id = pm->newstate;
 	state->fail = NULL;
-	//TODO should fail default to zerostate or NULL?
 
 	state->output = (slist_t*)malloc(sizeof(slist_t));
 	state->_transitions = (slist_t*)malloc(sizeof(slist_t));
@@ -39,6 +40,7 @@ int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
 		perror("Failed to allocate memory\n");
 		exit(-1);
 	}
+
 	memset(state->output, 0, sizeof(slist_t));
 	memset(state->_transitions, 0, sizeof(slist_t));
 	slist_init(state->output);
@@ -85,7 +87,7 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 	}
 	printf("appending output\n");//DEBUG
 	slist_append(currentState->output, c);
-	printf("checking output\n");
+	printf("checking output\n");//DEBUG
 	print_list2(currentState->output);
 	return 0;
 }
@@ -141,6 +143,8 @@ int pm_makeFSM(pm_t *pm) {
 			print_list2(current->output);
 		}
 	}
+
+	free(queue);
 }
 
 /****************************************************/
@@ -290,9 +294,29 @@ slist_t* pm_fsm_search(pm_t *pm,
 void pm_destroy(pm_t* pm) {
 	printf("pm_destroy\n");//DEBUG
 
-
+	pm_destroy_state(pm->zerostate);
+	free(pm);
 }
 
+
+void pm_destroy_state(pm_state_t* state) {
+
+	slist_node_t* p = state->slist_head(_transitions);
+	printf("this state = %d\n", state->id);//DEBUG
+	while(p != NULL) {
+
+		pm_state_t* nextState = ((pm_labeled_edge_t*)slist_data(p))->state;
+		printf("nextState = %d\n", nextState->id);//DEBUG
+		pm_destroy_states(nextState);
+		p = slist_next(p);
+
+	}
+
+	printf("destroying state = %d\n", state->id);//DEBUG
+	slist_destroy(state->output, SLIST_LEAVE_DATA);
+	slist_destroy(state->_transitions, SLIST_FREE_DATA);
+	free(state);
+}
 
 /****************************************************/
 /****************************************************/

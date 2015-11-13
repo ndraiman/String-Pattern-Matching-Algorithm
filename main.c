@@ -117,8 +117,15 @@ int main() {
     slist_t* matched = pm_fsm_search(fsm, string, strlen(string));
     printf("matched list:\n");
     print_list3(matched);
-
+    printf("destroying matched list...\n");
     slist_destroy(matched, SLIST_FREE_DATA);
+
+    printf("*******************************\n");
+    printf("*******************************\n");
+
+    printf("Destroying fsm\n");
+    pm_destroy(fsm);
+    printf("pm_destroy finished\n");
 
     printf("\n********************\n***** Main END *****\n********************\n");
 
