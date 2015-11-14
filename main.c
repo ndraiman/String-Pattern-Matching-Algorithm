@@ -112,7 +112,7 @@ int main() {
 
     printf("*******************************\n");
 
-    string = "xyzabcabde";
+    string = "acbcabacbacbacbacbacbacbabacb";
     printf("searching for string \"%s\"\n", string);
     slist_t* matched = pm_fsm_search(fsm, string, strlen(string));
     printf("matched list:\n");

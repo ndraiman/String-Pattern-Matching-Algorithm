@@ -213,6 +213,7 @@ slist_t* pm_fsm_search(pm_t *pm,
 
 		int j;
 		pm_state_t* state;
+		pm_state_t* lastState;
 		pm_state_t* matched_state;
 
 		state = pm->zerostate;
@@ -223,10 +224,11 @@ slist_t* pm_fsm_search(pm_t *pm,
 
 			while((matched_state = pm_goto_get(state, c[j])) == NULL) {
 
+				lastState = state;
 				state = state->fail;
 
 				//if zerostate, increase j++, otherwise infinite loop.
-				if(state->id == 0) {
+				if(state->id == lastState->id) {
 					j++;
 
 					if(j == n) {
