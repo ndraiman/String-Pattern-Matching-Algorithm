@@ -227,7 +227,7 @@ slist_t* pm_fsm_search(pm_t *pm,
 				lastState = state;
 				state = state->fail;
 
-				//if zerostate, increase j++, otherwise infinite loop.
+				//if its the same state, increase j++, to avoid infinite loop.
 				if(state->id == lastState->id) {
 					j++;
 
