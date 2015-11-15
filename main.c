@@ -114,7 +114,7 @@ int main() {
 
     string = "acbcabacbacbacbacbacbacbabacb";
     printf("searching for string \"%s\"\n", string);
-    slist_t* matched = pm_fsm_search(fsm, string, strlen(string));
+    slist_t* matched = pm_fsm_search(fsm->zerostate, string, strlen(string));
     printf("matched list:\n");
     print_list3(matched);
     printf("destroying matched list...\n");

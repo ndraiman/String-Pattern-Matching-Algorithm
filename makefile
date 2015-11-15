@@ -10,7 +10,7 @@ app: $(OBJECTS)
 
 debug: $(DEBUG_OBJECTS)
 	$(CC) $(DEBUG_FLAGS) $(DEBUG_OBJECTS) -Wall -o app
-	
+
 clean:
 	rm $(OBJECTS)
 

@@ -200,7 +200,7 @@ pm_state_t* pm_goto_get(pm_state_t *state,
 /****************************************************/
 
 
-slist_t* pm_fsm_search(pm_t *pm,
+slist_t* pm_fsm_search(pm_state_t *state,
 	unsigned char *c,
 	size_t n) {
 
@@ -212,15 +212,12 @@ slist_t* pm_fsm_search(pm_t *pm,
 		slist_init(matched_list);
 
 		int j;
-		pm_state_t* state;
+		//received state should be zerostate, does it need checking?
 		pm_state_t* lastState;
 		pm_state_t* matched_state;
 
-		state = pm->zerostate;
 
 		for(j = 0; j < n; j++) {
-
-			// state = pm->zerostate; //Should i get pm_state_t or pm_t?
 
 			while((matched_state = pm_goto_get(state, c[j])) == NULL) {
 
