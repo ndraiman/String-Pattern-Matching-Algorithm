@@ -116,7 +116,7 @@ int main() {
     printf("searching for string \"%s\"\n", string);
     slist_t* matched = pm_fsm_search(fsm->zerostate, string, strlen(string));
     printf("matched list:\n");
-    print_list3(matched);
+    // print_list3(matched);
     printf("destroying matched list...\n");
     slist_destroy(matched, SLIST_FREE_DATA);
 
@@ -136,18 +136,18 @@ int main() {
 
 
 
-void print_list(slist_t* list) {
-    printf("print_list() \n");
-
-    slist_node_t* p;
-    int i = 0;
-
-    for(p = slist_head(list); p != NULL; p = slist_next(p)) {
-
-        i++;
-        printf("[%d] -> ", *(int*)slist_data(p));
-    }
-
-    printf("|| \n");
-
-}
+// void print_list(slist_t* list) {
+//     printf("print_list() \n");
+//
+//     slist_node_t* p;
+//     int i = 0;
+//
+//     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
+//
+//         i++;
+//         printf("[%d] -> ", *(int*)slist_data(p));
+//     }
+//
+//     printf("|| \n");
+//
+// }

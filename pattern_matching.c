@@ -11,6 +11,8 @@ void pm_destroy_state(pm_state_t*);
 
 int pm_init(pm_t *pm) {
 
+	memset(pm, 0, sizeof(pm_t));
+
 	pm->zerostate = (pm_state_t*)malloc(sizeof(pm_state_t));
 	if(pm->zerostate == NULL) {
 		perror("Failed to allocate memory\n");
@@ -39,8 +41,6 @@ int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
 		exit(-1);
 	}
 
-	memset(state->output, 0, sizeof(slist_t));
-	memset(state->_transitions, 0, sizeof(slist_t));
 	slist_init(state->output);
 	slist_init(state->_transitions);
 
@@ -85,7 +85,7 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 	}
 
 	slist_append(currentState->output, c);
-	print_list2(currentState->output);
+	// print_list2(currentState->output); //DEBUG
 
 	return 0;
 }
@@ -100,6 +100,7 @@ int pm_makeFSM(pm_t *pm) {
 		perror("Failed to allocate memory\n");
 		exit(-1);
 	}
+	slist_init(queue);
 
 	slist_node_t* p;
 	for(p = pm->zerostate->slist_head(_transitions); p != NULL; p = slist_next(p)) {
@@ -115,6 +116,7 @@ int pm_makeFSM(pm_t *pm) {
 
 
 	while(slist_size(queue) != 0) {
+
 
 		pm_state_t* r = slist_pop_first(queue);
 
@@ -301,34 +303,34 @@ void pm_destroy_state(pm_state_t* state) {
 /****************************************************/
 
 //DEBUG:
-void print_list2(slist_t* list) {
-    printf("print_list() \n");
-
-    slist_node_t* p;
-    int i = 0;
-
-    for(p = slist_head(list); p != NULL; p = slist_next(p)) {
-
-        i++;
-        printf("[%s] -> ", (char*)slist_data(p));
-    }
-
-    printf("|| \n");
-
-}
-
-void print_list3(slist_t* list) {
-    printf("print_list() \n");
-
-    slist_node_t* p;
-    int i = 0;
-
-    for(p = slist_head(list); p != NULL; p = slist_next(p)) {
-				pm_match_t* match = (pm_match_t*)slist_data(p);
-        i++;
-        printf("[%s] -> ", match->pattern);
-    }
-
-    printf("|| \n");
-
-}
+// void print_list2(slist_t* list) {
+//     printf("print_list() \n");
+//
+//     slist_node_t* p;
+//     int i = 0;
+//
+//     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
+//
+//         i++;
+//         printf("[%s] -> ", (char*)slist_data(p));
+//     }
+//
+//     printf("|| \n");
+//
+// }
+//
+// void print_list3(slist_t* list) {
+//     printf("print_list() \n");
+//
+//     slist_node_t* p;
+//     int i = 0;
+//
+//     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
+// 				pm_match_t* match = (pm_match_t*)slist_data(p);
+//         i++;
+//         printf("[%s] -> ", match->pattern);
+//     }
+//
+//     printf("|| \n");
+//
+// }
