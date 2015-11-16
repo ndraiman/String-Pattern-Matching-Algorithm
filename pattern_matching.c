@@ -3,8 +3,6 @@
 #include <string.h>
 #include "pattern_matching.h"
 
-// void print_list2(slist_t*);//DEBUG
-// void print_list3(slist_t*);//DEBUG
 
 int init_state(pm_t*, pm_state_t*, pm_int_t);
 void pm_destroy_state(pm_state_t*);
@@ -85,7 +83,6 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 	}
 
 	slist_append(currentState->output, c);
-	// print_list2(currentState->output); //DEBUG
 
 	return 0;
 }
@@ -301,36 +298,3 @@ void pm_destroy_state(pm_state_t* state) {
 
 /****************************************************/
 /****************************************************/
-
-//DEBUG:
-// void print_list2(slist_t* list) {
-//     printf("print_list() \n");
-//
-//     slist_node_t* p;
-//     int i = 0;
-//
-//     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
-//
-//         i++;
-//         printf("[%s] -> ", (char*)slist_data(p));
-//     }
-//
-//     printf("|| \n");
-//
-// }
-//
-// void print_list3(slist_t* list) {
-//     printf("print_list() \n");
-//
-//     slist_node_t* p;
-//     int i = 0;
-//
-//     for(p = slist_head(list); p != NULL; p = slist_next(p)) {
-// 				pm_match_t* match = (pm_match_t*)slist_data(p);
-//         i++;
-//         printf("[%s] -> ", match->pattern);
-//     }
-//
-//     printf("|| \n");
-//
-// }
