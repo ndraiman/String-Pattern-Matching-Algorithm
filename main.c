@@ -4,7 +4,7 @@
 #include "slist.h"
 #include "pattern_matching.h"
 
-void print_list(slist_t*);
+// void print_list(slist_t*);
 
 
 

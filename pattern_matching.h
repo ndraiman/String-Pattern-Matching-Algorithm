@@ -1,9 +1,9 @@
 /**
 
   @file
-  
+
   @brief implementation of pattern matching algorithm.
-    
+
   */
 
 #include "slist.h"
@@ -31,8 +31,8 @@ struct pm_state
 {
 	pm_int_t id;
 	pm_int_t depth;
-	slist_t* output;  //list of patterns 
-	struct pm_state * fail; //failure function, pointer to the state that we should go when there is no transition  
+	slist_t* output;  //list of patterns
+	struct pm_state * fail; //failure function, pointer to the state that we should go when there is no transition
 	slist_t* _transitions; //list of edges
 };
 typedef struct pm_state pm_state_t;
@@ -58,36 +58,36 @@ struct pm
 typedef struct pm pm_t;
 
 
-/* Initializes the fsm parameters (the fsm itself sould be allocated).  Returns 0 on success, -1 on failure. 
+/* Initializes the fsm parameters (the fsm itself sould be allocated).  Returns 0 on success, -1 on failure.
 *  this function should init zero state
 */
 int pm_init(pm_t *);
 
-/* Adds a new string to the fsm, given that the string is of length n. 
+/* Adds a new string to the fsm, given that the string is of length n.
    Returns 0 on success, -1 on failure.*/
 int pm_addstring(pm_t *,unsigned char *, size_t n);
 
 /* Finalizes construction by setting up the failrue transitions, as
-   well as the goto transitions of the zerostate. 
+   well as the goto transitions of the zerostate.
    Returns 0 on success, -1 on failure.*/
 int pm_makeFSM(pm_t *);
 
 
 /* Set a transition arrow from this from_state, via a symbol, to a
    to_state. will be used in the pm_addstring and pm_makeFSM functions.
-   Returns 0 on success, -1 on failure.*/   
+   Returns 0 on success, -1 on failure.*/
 int pm_goto_set(pm_state_t *from_state,
 			   unsigned char symbol,
 			   pm_state_t *to_state);
 
-/* Returns the transition state.  If no such state exists, returns NULL. 
+/* Returns the transition state.  If no such state exists, returns NULL.
    will be used in pm_addstring, pm_makeFSM, pm_fsm_search, pm_destroy functions. */
 pm_state_t* pm_goto_get(pm_state_t *state,
 					    unsigned char symbol);
 
 
 
-/* Search for matches in a string of size n in the FSM. 
+/* Search for matches in a string of size n in the FSM.
    if there are no matches return empty list */
 slist_t* pm_fsm_search(pm_state_t *,unsigned char *,size_t);
 

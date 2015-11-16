@@ -3,8 +3,8 @@
 #include <string.h>
 #include "pattern_matching.h"
 
-void print_list2(slist_t*);//DEBUG
-void print_list3(slist_t*);//DEBUG
+// void print_list2(slist_t*);//DEBUG
+// void print_list3(slist_t*);//DEBUG
 
 int init_state(pm_t*, pm_state_t*, pm_int_t);
 void pm_destroy_state(pm_state_t*);
