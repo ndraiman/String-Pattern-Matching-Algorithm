@@ -3,11 +3,19 @@
 #include <string.h>
 #include "pattern_matching.h"
 
-
+//Private Methods Declarations
 int init_state(pm_t*, pm_state_t*, pm_int_t);
 void pm_destroy_state(pm_state_t*);
 
+/****************************************************/
+/****************************************************/
+
+
 int pm_init(pm_t *pm) {
+
+	if(pm == NULL) {
+		return -1;
+	}
 
 	memset(pm, 0, sizeof(pm_t));
 
@@ -25,6 +33,10 @@ int pm_init(pm_t *pm) {
 
 
 int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
+
+	if(pm == NULL || state == NULL) {
+		return -1;
+	}
 
 	memset(state, 0, sizeof(pm_state_t));
 
@@ -51,6 +63,10 @@ int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
 /****************************************************/
 
 int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
+
+	if(pm == NULL || c == NULL) {
+		return -1;
+	}
 
 	int i;
 	pm_state_t* currentState = pm->zerostate;
@@ -91,6 +107,10 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 /****************************************************/
 
 int pm_makeFSM(pm_t *pm) {
+
+	if(pm == NULL) {
+		return -1;
+	}
 
 	slist_t* queue = (slist_t*)malloc(sizeof(slist_t));
 	if(queue == NULL) {
@@ -155,6 +175,10 @@ int pm_goto_set(pm_state_t *from_state,
 	unsigned char symbol,
 	pm_state_t *to_state) {
 
+		if(from_state == NULL || to_state == NULL) {
+			return -1;
+		}
+
 		printf("%d -> %c -> %d\n", from_state->id, symbol, to_state->id);
 
 		pm_labeled_edge_t* edge = (pm_labeled_edge_t*)malloc(sizeof(pm_labeled_edge_t));
@@ -210,8 +234,12 @@ slist_t* pm_fsm_search(pm_state_t *state,
 		}
 		slist_init(matched_list);
 
+		if(state == NULL || c == NULL) {
+			return matched_list; //returning empty list
+		}
+
 		int j;
-		//received state should be zerostate, does it need checking?
+
 		pm_state_t* lastState;
 		pm_state_t* matched_state;
 
@@ -271,6 +299,10 @@ slist_t* pm_fsm_search(pm_state_t *state,
 /****************************************************/
 
 void pm_destroy(pm_t* pm) {
+
+	if(pm == NULL) {
+		return;
+	}
 
 	pm_destroy_state(pm->zerostate);
 	free(pm);

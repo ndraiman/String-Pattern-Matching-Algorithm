@@ -9,6 +9,10 @@
 
 void slist_init(slist_t* list) {
 
+  if(list == NULL) {
+    return;
+  }
+
   memset(list, 0, sizeof(slist_t));
   slist_head(list) = NULL;
   slist_tail(list) = NULL;
@@ -21,6 +25,10 @@ void slist_init(slist_t* list) {
 /****************************************************/
 
 void slist_destroy(slist_t* list,slist_destroy_t dealloc) {
+
+    if(list == NULL) {
+      return;
+    }
 
     slist_node_t* p, *q;
 
@@ -43,7 +51,7 @@ void slist_destroy(slist_t* list,slist_destroy_t dealloc) {
 
 void* slist_pop_first(slist_t* list) {
 
-    if(slist_size(list) == 0) {
+    if(list == NULL || slist_size(list) == 0) {
         return NULL;
 
     }
@@ -72,6 +80,10 @@ void* slist_pop_first(slist_t* list) {
 /****************************************************/
 
 int slist_append(slist_t* list, void* data) {
+
+    if(list == NULL || data == NULL) {
+      return -1;
+    }
 
     slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
     if(node == NULL) {
@@ -103,6 +115,10 @@ int slist_append(slist_t* list, void* data) {
 /****************************************************/
 
 int slist_prepend(slist_t* list, void* data) {
+
+  if(list == NULL || data == NULL) {
+    return -1;
+  }
 
   slist_node_t* node = (slist_node_t*)malloc(sizeof(slist_node_t));
   if(node == NULL) {
@@ -138,6 +154,10 @@ int slist_prepend(slist_t* list, void* data) {
 
 
 int slist_append_list(slist_t* to, slist_t* from) {
+
+  if(to == NULL || from == NULL) {
+    return -1;
+  }
 
   slist_node_t* p;
 

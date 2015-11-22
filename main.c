@@ -28,24 +28,14 @@ int main() {
     // slist_append(list2, &x);
     // slist_prepend(list2, &y);
     //
-    // printf("\n*** Printing list ***\n");
-    // print_list(list);
-    // printf("\n*** Printing list2 ***\n");
-    // print_list(list2);
     //
     // printf("\n*** Pop list ***\n");
     // slist_pop_first(list);
     //
-    // printf("\n*** Printing list ***\n");
-    // print_list(list);
     //
     // printf("\n*** Appending lists ***\n");
     // slist_append_list(list, list2);
     //
-    // printf("\n*** Printing list ***\n");
-    // print_list(list);
-    // printf("\n*** Printing list2 ***\n");
-    // print_list(list2);
     //
     // printf("\n*** Destroying lists ***\n");
     // slist_destroy(list, SLIST_LEAVE_DATA);
@@ -112,10 +102,10 @@ int main() {
 
     printf("*******************************\n");
 
-    string = "acbcabacbacbacbacbacbacbabacb";
+    string = "xyzabcabde";
     printf("searching for string \"%s\"\n", string);
     slist_t* matched = pm_fsm_search(fsm->zerostate, string, strlen(string));
-    printf("matched list:\n");
+    // printf("matched list:\n");
     // print_list3(matched);
     printf("destroying matched list...\n");
     slist_destroy(matched, SLIST_FREE_DATA);
