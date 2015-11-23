@@ -5,7 +5,8 @@
 
 //Private Methods Declarations
 int init_state(pm_t*, pm_state_t*, pm_int_t);
-void pm_destroy_state(pm_state_t*);
+void pm_destroy_state(pm_state_t*); //Destory States by recursion
+int contains(slist_t*, char*); //check if list contains string
 
 /****************************************************/
 /****************************************************/
@@ -31,7 +32,7 @@ int pm_init(pm_t *pm) {
 	return result;
 }
 
-
+//Private Method
 int init_state(pm_t* pm, pm_state_t* state, pm_int_t depth) {
 
 	if(pm == NULL || state == NULL) {
@@ -98,7 +99,31 @@ int pm_addstring(pm_t *pm, unsigned char *c, size_t n) {
 		}
 	}
 
-	slist_append(currentState->output, c);
+	if(contains(currentState->output, c) == 0) {
+
+		slist_append(currentState->output, c);
+
+	} 
+
+	return 0;
+}
+
+
+//Private Method
+int contains(slist_t* list, char* string) {
+
+	if(list == NULL) {
+		return -1;
+	}
+
+	slist_node_t* p;
+	for(p = slist_head(list); p != NULL; p = slist_next(p)) {
+
+		if(slist_data(p) == string) {
+			return -1;
+		}
+
+	}
 
 	return 0;
 }
@@ -309,7 +334,7 @@ void pm_destroy(pm_t* pm) {
 
 }
 
-
+//Private Method
 void pm_destroy_state(pm_state_t* state) {
 
 	slist_node_t* p = state->slist_head(_transitions);

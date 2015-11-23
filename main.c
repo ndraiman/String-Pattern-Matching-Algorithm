@@ -12,7 +12,7 @@ int main() {
 
   printf("\n********************\n**** Main START ****\n********************\n");
 
-    // slist_t* list = (slist_t*)malloc(sizeof(slist_t));
+                                                                                                                                                                                                                                                                                                                                                                                                      // slist_t* list = (slist_t*)malloc(sizeof(slist_t));
     // slist_t* list2 = (slist_t*)malloc(sizeof(slist_t));
     //
     // slist_init(list);
@@ -84,6 +84,13 @@ int main() {
     printf("*******************************\n");
 
     string = "acb";
+    printf("adding string: %s\n", string);
+    returned = pm_addstring(fsm, string, 3);
+    printf("pm_addstring returned %d\n", returned);
+
+    printf("*******************************\n");
+
+    string = "abc";
     printf("adding string: %s\n", string);
     returned = pm_addstring(fsm, string, 3);
     printf("pm_addstring returned %d\n", returned);
